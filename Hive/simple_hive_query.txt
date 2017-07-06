@@ -1,0 +1,32 @@
+#Define Table
+#Set hdfs location as to not copy to hive warehouse
+create table hmeq_final (
+	BAD INT,
+	LOAN INT,
+	MORTDUE INT,
+	VALUE INT,
+	REASON STRING,
+	JOB STRING,
+	YOJ INT,
+	DEROG INT,
+	DELINQ INT,
+	CLAGE INT,
+	NINQ INT, 
+	CLNO INT,
+DEBTINC INT)
+row format delimited fields terminated by ','
+location 'user/andrew/data'
+tblproperties("skip.header.line.count"="1");
+
+#Load data from hdfs into hive
+load data inpath 'hdfs:/user/andrew/data/HMEQ2.csv' into table hmeq_final;
+
+#print data
+set hive.cli.print.header=true;
+select * from hmeq_final limit 10;
+
+#see table list
+show tables;
+
+#See column breakdown for hmeq_final table
+describe hmeq_final;
